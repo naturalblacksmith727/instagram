@@ -201,4 +201,4 @@ name = input("이름을 입력하세요: ")
 year = int(input("태어난 년도를 입력하세요: "))
 now = int(input("현재 년도를 입력하세요: "))
 
-print(f"안녕하세요. {name}님! 당신은 {now - year + 1}살입니다.")
+# print(f"안녕하세요. {name}님! 당신은 {now - year + 1}살입니다.")
