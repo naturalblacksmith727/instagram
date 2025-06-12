@@ -8,6 +8,9 @@
             "args": [
                 "-g",
                 "${file}",
+                "-I/usr/local/mysql-connector-c++-9.3.0/include",
+                "-L/usr/local/mysql-connector-c++-9.3.0/lib64",
+                "-lmysqlcppconn",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
