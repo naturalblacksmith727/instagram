@@ -222,7 +222,7 @@
 "error" : str(e)
 }
 ~~~
-#posting
+# posting
 ## 포스팅 생성
 1. Endpoint
     - POST /posting/<int:user_id>/create
@@ -288,7 +288,7 @@
 }
 ~~~
 
-# 포스팅 전체 조회 
+## 포스팅 전체 조회 
 1. Endpoint
     - GET /posting/<int:user_id>/check
     - user_id: 현재 로그인한 사용자의 user_id
