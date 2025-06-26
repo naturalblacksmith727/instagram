@@ -7,7 +7,7 @@ def get_connection():
         host='database-1.cts2qeeg0ot5.ap-northeast-2.rds.amazonaws.com',
         user='kevin',
         password='spreatics*',
-        db='insta_jiwon',
+        db='instagram',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
@@ -382,35 +382,96 @@ def post_check(user_id):
             "reason" : str(e)
         }
 
-# #포스팅 내용 변경   
-# @app.route('/posting/edit/<string:edit>', methods = ['PATCH'])
-# def edit_post(edit):
+# 코멘트 달기 
+@app.route('/comment/<int:user_id>', methods = ['POST'])
+def comment_create(user_id):
 
-#     #user data 받아오기
-#     data = request.get_json()
+    #코멘트를 달 포스트 data 받아오기
+    data = request.get_json()
     
-#     post_title = data['title']
-#     post_text= data['text']
-#     user_id = data['user_id']
+    post_id = data['post_id']
+    text = data['text']
 
-#     #sql insert data
-#     conn = get_connection()
 
-#     with conn.cursor() as cursor:
+    conn = get_connection()
 
-#         sql_create = """
-#         Insert into post (title, post_text, posting_date, user_id) Values
-#         (%s, %s, %s, %s)
-#         """
-#         cursor.execute(sql_create, (post_title, post_text, post_date, user_id))
-#         new_post_id = cursor.lastrowid
+    try:
+        with conn.cursor() as cursor:
+            sql = """
+            Select * 
+            from posts 
+            where post_id = %s
+            """
+            cursor.execute(sql, (post_id,))
+            row = cursor.fetchone()
+            conn.commit()
 
-#         conn.commit()
-        
-#         return {
-#             "status": "posting success",
-#             "post_id": new_post_id
-#         }
+            if row:
+                sql = """
+                Insert into comments (user_id, post_id, text) Values
+                (%s, %s, %s)
+                """
+                cursor.execute(sql, (user_id, post_id, text))
+                conn.commit() 
+
+                return {
+                    "status" : "comment success"
+                }    
+            else:
+                return {
+                     "status" : "comment failed",
+                    "reason" : "post not found"
+                }
+
+    except Exception as e:
+        return {
+            "status" : "comment failed",
+            "reason" : str(e)
+        }
+
+
+# 코멘트 가져오기  
+@app.route('/comment/<int:user_id>/check', methods = ['GET'])
+def comment_check(user_id):
+
+    conn = get_connection()
+
+    try:
+        with conn.cursor() as cursor:
+            sql = """
+            Select * 
+            from comments 
+            where user_id = %s
+            """
+            cursor.execute(sql, (user_id,))
+            rows = cursor.fetchall()
+            conn.commit()
+
+            if rows:
+                results = [
+                    {
+                        "post_id": row["post_id"],
+                        "text": row["text"]
+                    }
+                    for row in rows
+                ]
+                return {
+                    "status": "comment check success",
+                    "result": results
+                }
+            else:
+                return {
+                    "status": "comment check failed",
+                    "reason": "no comments found"
+                }
+
+    except Exception as e:
+        return {
+            "status" : "comment check failed",
+            "reason" : str(e)
+        }
+
+
 
 
 

@@ -338,3 +338,87 @@
 }
 
 ~~~
+
+## 코멘트 달기
+1. Endpoint
+    - POST /comment/<user_id>
+    - user_id: 현재 로그인한 사용자의 user_id
+
+2. Request body
+- post_id: 댓글을 달 포스팅 id (required)
+- text: 댓글 내용 (required)
+
+3. Description
+- 해당 포스팅이 존재할 경우, 사용자가 해당 포스트에 댓글을 작성
+- 포스트가 존재하지 않을 경우 실패로 처리
+
+5. Response body
+- status: comment success, comment failed
+- reason: 실패 시, 실패 요인
+
+~~~
+# 코멘트 작성 성공 시  
+{
+  "status": "comment success"
+}
+
+# 코멘트 작성 실패 시 - 해당 post_id가 존재하지 않음  
+{
+  "status": "comment failed",
+  "reason": "post not found"
+}
+
+# 코멘트 작성 실패 시 - 기타 오류  
+{
+  "status": "comment failed",
+  "reason": "Exception message"
+}
+
+
+~~~
+
+## 코멘트 조회
+1. Endpoint
+    - GET /comment/<user_id>/check
+    - user_id: 현재 로그인한 사용자의 user_id
+
+2. Request body
+- 없음
+
+3. Description
+- 특정 사용자가 작성한 모든 댓글을 조회
+
+5. Response body
+- status: comment check success, comment check failed
+- result: 댓글 배열 (post_id, text 포함)
+- reason: 실패 시, 실패 요인
+
+~~~
+# 코멘트 조회 성공 시  
+{
+  "status": "comment check success",
+  "result": [
+    {
+      "post_id": 12,
+      "text": "정말 멋진 글이네요!"
+    },
+    {
+      "post_id": 13,
+      "text": "좋은 정보 감사합니다."
+    }
+  ]
+}
+
+# 코멘트 조회 실패 시 - 댓글이 하나도 없음  
+{
+  "status": "comment check failed",
+  "reason": "no comments found"
+}
+
+# 코멘트 조회 실패 시 - 기타 오류  
+{
+  "status": "comment check failed",
+  "reason": "Exception message"
+}
+
+~~~
