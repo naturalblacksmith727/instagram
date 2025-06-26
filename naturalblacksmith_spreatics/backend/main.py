@@ -93,7 +93,7 @@ def login():
             else:
                 return {
                     "status": "login failed",
-                    "reason": "incorrect nickname or password"
+                    "reason": "no user found. please create an account"
                 }
             
     except Exception as e:
