@@ -430,8 +430,13 @@ def comment_create(user_id):
 
 
 # 코멘트 가져오기  
-@app.route('/comment/<int:post_id>/check', methods = ['GET'])
-def comment_check(post_id):
+@app.route('/comment/check', methods = ['GET'])
+def comment_check():
+
+    #user data 받아오기
+    data = request.get_json()
+    
+    post_id = data['post_id']
 
     conn = get_connection()
 

@@ -379,11 +379,10 @@
 
 ## 코멘트 조회
 1. Endpoint
-    - GET /comment/<user_id>/check
-    - user_id: 현재 로그인한 사용자의 user_id
+    - GET /comment/check
 
 2. Request body
-- 없음
+- post_id: 댓글을 조회하고 싶은 포스트
 
 3. Description
 - 특정 사용자가 작성한 모든 댓글을 조회
