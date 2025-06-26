@@ -72,9 +72,19 @@ void m_3_4_createcomment() {
 
 
 void m_3_5_getcomment() {
-    cout << "[내가 작성한 댓글 조회]" << endl;
+    string post_id;
 
-    string endpoint = "/comment/" + to_string(user_id) + "/check";
+    cout << "포스트 코멘트 조회" << endl;
+    cout << "포스트 아이디:" << endl;
+    cin.ignore();              
+    getline(cin, post_id);      
+
+    json body;
+    body["post_id"] = post_id;
+
+    cout << "[포스트 별 댓글 조회]" << endl;
+
+    string endpoint = "/comment/" + post_id + "/check";
     json response = send_request("GET", endpoint);
 
     cout << "status: " << response["status"] << endl;
@@ -95,8 +105,9 @@ void m_3_3_postdelete(){
     string post_id;
 
     cout << "포스팅 삭제" << endl;
-    cout << "포스트 아이디" << endl;
-    cin >> post_id;
+    cout << "포스트 아이디:" << endl;
+    cin.ignore();              
+    getline(cin, post_id);      
 
     json body;
     body["post_id"] = post_id;
@@ -143,9 +154,11 @@ void m_3_1_posting() {
 
     cout << "포스팅 생성" << endl;
     cout << "포스트 제목:" << endl;
-    cin >> title;
+    cin.ignore(); // 버퍼에 남은 개행 제거
+    getline(cin, title);
+
     cout << "포스트 내용:" << endl;
-    cin >> post_text;
+    getline(cin, post_text);
 
     json body;
     body["title"] = title;
@@ -179,6 +192,7 @@ void m_3_social() {
         cout << "6. 돌아가기" << endl;
         cout << "번호를 입력하세요: ";
         cin >> i;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 
         switch (i) {
             case 1:

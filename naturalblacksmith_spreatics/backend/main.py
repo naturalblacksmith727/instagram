@@ -341,8 +341,8 @@ def delete_post():
             "status": "posting delete failed",
             "reason" : str(e)
         }
-@app.route('/posting/<int:user_id>/check', methods = ['GET'])
-def post_check(user_id):
+@app.route('/posting/check', methods = ['GET'])
+def post_check():
 
     conn = get_connection()
 
@@ -351,9 +351,8 @@ def post_check(user_id):
             sql = """
             Select * 
             from posts 
-            where user_id = %s
             """
-            cursor.execute(sql, (user_id,))
+            cursor.execute(sql)
             rows = cursor.fetchall()
             conn.commit()
 
@@ -431,7 +430,7 @@ def comment_create(user_id):
 
 
 # 코멘트 가져오기  
-@app.route('/comment/<int:user_id>/check', methods = ['GET'])
+@app.route('/comment/<int:post_id>/check', methods = ['GET'])
 def comment_check(user_id):
 
     conn = get_connection()
@@ -441,7 +440,7 @@ def comment_check(user_id):
             sql = """
             Select * 
             from comments 
-            where user_id = %s
+            where post_id = %s
             """
             cursor.execute(sql, (user_id,))
             rows = cursor.fetchall()
