@@ -431,7 +431,7 @@ def comment_create(user_id):
 
 # 코멘트 가져오기  
 @app.route('/comment/<int:post_id>/check', methods = ['GET'])
-def comment_check(user_id):
+def comment_check(post_id):
 
     conn = get_connection()
 
@@ -442,7 +442,7 @@ def comment_check(user_id):
             from comments 
             where post_id = %s
             """
-            cursor.execute(sql, (user_id,))
+            cursor.execute(sql, (post_id,))
             rows = cursor.fetchall()
             conn.commit()
 

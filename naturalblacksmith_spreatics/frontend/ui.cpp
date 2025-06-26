@@ -79,11 +79,6 @@ void m_3_5_getcomment() {
     cin.ignore();              
     getline(cin, post_id);      
 
-    json body;
-    body["post_id"] = post_id;
-
-    cout << "[포스트 별 댓글 조회]" << endl;
-
     string endpoint = "/comment/" + post_id + "/check";
     json response = send_request("GET", endpoint);
 
@@ -93,6 +88,7 @@ void m_3_5_getcomment() {
         for (auto& comment : response["result"]) {
             cout << "post_id: " << comment["post_id"] << endl;
             cout << "text   : " << comment["text"] << endl;
+            cout << "--------------------" << endl;
         }
     } else if (response.contains("reason")) {
         cout << "reason: " << response["reason"] << endl;
@@ -126,7 +122,7 @@ void m_3_3_postdelete(){
 void m_3_2_allpost() {
     cout << "작성한 포스팅 스레드" << endl;
 
-    string endpoint = "/posting/" + to_string(user_id) + "/check";
+    string endpoint = "/posting/check";
 
     json response = send_request("GET", endpoint);
 
