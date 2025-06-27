@@ -85,7 +85,6 @@ void m_3_5_getcomment() {
 
     if (response.contains("result") && response["result"].is_array()) {
         for (auto& comment : response["result"]) {
-            cout << "post_id: " << comment["user_id"] << endl;
             cout << "text   : " << comment["text"] << endl;
             cout << "--------------------" << endl;
         }
