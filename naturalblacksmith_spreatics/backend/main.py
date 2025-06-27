@@ -433,10 +433,7 @@ def comment_create(user_id):
 @app.route('/comment/check', methods = ['GET'])
 def comment_check():
 
-    #user data 받아오기
-    data = request.get_json()
-    
-    post_id = data['post_id']
+    post_id = request.args.get('post_id')
 
     conn = get_connection()
 
@@ -454,7 +451,7 @@ def comment_check():
             if rows:
                 results = [
                     {
-                        "post_id": row["post_id"],
+                        "user_id": row["user_id"],
                         "text": row["text"]
                     }
                     for row in rows

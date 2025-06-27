@@ -385,7 +385,7 @@
 - post_id: 댓글을 조회하고 싶은 포스트
 
 3. Description
-- 특정 사용자가 작성한 모든 댓글을 조회
+- 포스팅에 작성된 모든 댓글을 조회
 
 5. Response body
 - status: comment check success, comment check failed

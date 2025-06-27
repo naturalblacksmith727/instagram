@@ -76,17 +76,16 @@ void m_3_5_getcomment() {
 
     cout << "포스트 코멘트 조회" << endl;
     cout << "포스트 아이디:" << endl;
-    cin.ignore();              
-    getline(cin, post_id);      
-
-    string endpoint = "/comment/" + post_id + "/check";
+    cin >> post_id; 
+    
+    string endpoint = "/comment/check?post_id=" + post_id;
     json response = send_request("GET", endpoint);
 
     cout << "status: " << response["status"] << endl;
 
     if (response.contains("result") && response["result"].is_array()) {
         for (auto& comment : response["result"]) {
-            cout << "post_id: " << comment["post_id"] << endl;
+            cout << "post_id: " << comment["user_id"] << endl;
             cout << "text   : " << comment["text"] << endl;
             cout << "--------------------" << endl;
         }
@@ -133,7 +132,7 @@ void m_3_2_allpost() {
             cout << "post_id: " << post["post_id"] << endl;
             cout << "title: " << post["title"] << endl;
             cout << "text: " << post["text"] << endl;
-            cout << "user_id: " << post["user_id"] << endl;
+            cout << "--------------------" << endl;
         }
     } else {
         cout << "포스팅이 없습니다" << endl;
